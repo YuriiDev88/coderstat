@@ -10,7 +10,8 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:coderstat.helloWorld"
+        "onCommand:coderstat.helloWorld",
+				"onCommand:coderstat.catStart"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -18,6 +19,10 @@
 			{
 				"command": "coderstat.helloWorld",
 				"title": "Hello World"
+			},
+			{
+				"command": "coderstat.catStart",
+				"title": "catStart"
 			}
 		],
 		"views": {
