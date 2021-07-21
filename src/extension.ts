@@ -21,19 +21,21 @@ export function activate(context: vscode.ExtensionContext) {
 		infoMessage = "INFO_MESSAGE"
 	}
 
-	const getStatsString = (stats: ITextCatcher) => {
+	const getStatsString = (stats: ITextCatcher): string => {
 		return Object.entries(stats).map(([statName, stat]) => `${statName}: ${stat}`).join('\n');
 	};
 
-	const getWebViewString = (stats: ITextCatcher) => {
+	const getWebViewString = (stats: ITextCatcher): string  => {
 		return Object.entries(stats).map(([statName, stat]) => `<p>${statName}: ${stat}</p>`).join(' ');
 	};
-		const stats =  {
-				typeCount: 0,
-				deletionCount: 0,
-				symbolsTyped: 0,
-				symbolsDeleted: 0,
-			};	
+
+	const stats =  {
+			typeCount: 0,
+			deletionCount: 0,
+			symbolsTyped: 0,
+			symbolsDeleted: 0,
+		};	
+	
 	let disposable = vscode.commands.registerCommand('coderstat.helloWorld', () => {
 	
 		vscode.workspace.onDidChangeTextDocument((event) => {
@@ -43,23 +45,56 @@ export function activate(context: vscode.ExtensionContext) {
 		
 		const showStats = vscode.commands.registerCommand('coderstat.showStats', () => {
 			const messageText = getStatsString(stats);
-			// vscode.window.showInformationMessage(messageText);
+			vscode.window.showInformationMessage(messageText);
+		});
+
+		const showStatsWeb = vscode.commands.registerCommand('coderstat.showStatsWeb', () => {
+			const messageText = getWebViewString(stats);
 			const panel = vscode.window.createWebviewPanel(
 				'CoderStats', 
 				'Coder Stats',
 				vscode.ViewColumn.One,
 				{}
 			);
-			panel.webview.html = getWebviewTemplate(getWebViewString(stats));
+			panel.webview.html = getWebviewTemplate(messageText);
 		});
 
 		myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-		myStatusBarItem.command = 'coderstat.showStats';
+		myStatusBarItem.command = 'coderstat.openPick';
 		console.log(myStatusBarItem);
 		myStatusBarItem.text = 'coderStats';
 		myStatusBarItem.show();
-		context.subscriptions.push(showStats);
+		context.subscriptions.push(showStats, showStatsWeb);
 	});
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('coderstat.openPick', () => {
+			const pickItems = [
+				{
+					label: "informationMessage",
+					detail: "show stats in the information message"
+				},
+				{
+					label: "webView",
+					detail: "show stats in new web view window"
+				}
+			];
+
+			const pickView = vscode.window.createQuickPick();
+			pickView.items = pickItems;
+			pickView.onDidChangeSelection(selection => {
+				console.log(selection);
+				if (selection[0].label === "webView") {
+					vscode.commands.executeCommand('coderstat.showStatsWeb');
+				}
+				if (selection[0].label === "informationMessage") {
+					vscode.commands.executeCommand('coderstat.showStats');
+				}
+			});
+			pickView.onDidHide(() => pickView.dispose());
+			pickView.show();
+	})
+);
 
 	context.subscriptions.push(
     vscode.commands.registerCommand('coderstat.catStart', () => {
