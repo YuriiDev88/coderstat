@@ -23,7 +23,7 @@ const StatusBarProvider = (stats: ICoderStat, context: vscode.ExtensionContext) 
       'CoderStats', 
       'Coder Stats',
       vscode.ViewColumn.One,
-      {}
+      {enableScripts: true}
     );
     panel.webview.html = getWebviewTemplate(messageText);
 

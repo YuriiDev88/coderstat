@@ -18,6 +18,11 @@ export const getWebviewTemplate = (content: string) => {
 </head>
 <body>
     ${content}
+    <script>
+      const data = document.querySelectorAll('p');
+      console.log(data);
+      data.forEach((element) => element.style.color = 'blue');
+    </script>
 </body>
 </html>`;
 };
