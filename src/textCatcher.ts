@@ -10,7 +10,6 @@ const textCatcher = (event: vscode.TextDocumentChangeEvent, stats: ICoderStat): 
       ...stats, 
       typeCount: stats.typeCount += 1,
       symbolsTyped: stats.symbolsTyped += text.length,
-
     };
   } 
   else {
@@ -20,9 +19,6 @@ const textCatcher = (event: vscode.TextDocumentChangeEvent, stats: ICoderStat): 
        symbolsDeleted: stats.symbolsDeleted += rangeLength
       };
   }
-
-  console.log(stats, event.contentChanges[0]);
-  // vscode.window.showInformationMessage(Object.entries(stats).map(([statName, stat]) => `${statName}: ${stat}`).join('|'));
   return stats;
 };
 

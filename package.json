@@ -23,14 +23,40 @@
 			{
 				"command": "coderstat.catStart",
 				"title": "catStart"
-			}
+			},
+      {
+        "command": "coderstat.copyStats",
+        "title": "Refresh",
+        "icon": {
+          "light": "resources/copy.svg",
+          "dark": "resources/copy.svg"
+        }
+      }
 		],
+    "menus": {
+      "view/title": [
+        {
+          "command": "coderstat.copyStats",
+          "when": "view == coderStats"
+        }
+      ]
+    },
 		"views": {
-			"explorer": [{
-				"id": "coderStats",
-				"name": "coder Stats"
-			}]
-		}
+      "explorer": [{
+        "id": "coderStats",
+        "name": "coder Stats"
+      }]
+		},
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "coderStatsContainer",
+          "title": "coder Stats coderStatsContainer",
+          "icon": "media/coderStatIcon.svg"
+        }
+      ]
+    }
+
 	},
 	"scripts": {
 		"vscode:prepublish": "yarn run package",

@@ -1,9 +1,8 @@
 import * as vscode from 'vscode';
-import ICoderStat from './interfaces/ICoderStat';
-import textCatcher from './textCatcher';
-import { getStatsString, getWebViewString, getWebviewTemplate } from './utils';
 import StatusBarProvider from './StatusBarProvider';
 import QuickPickProvider from './QuickPickProvider';
+import {NodeDependenciesProvider} from './treeView/TreeDataProvider';
+import { getStatsString, getWebviewTemplate } from './utils';
 
 const cats = {
   'Coding Cat': 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
@@ -23,9 +22,24 @@ export function activate(context: vscode.ExtensionContext) {
 			symbolsTyped: 0,
 			symbolsDeleted: 0,
 		};	
+
+  const updateWebView = (webViewPanel: vscode.WebviewPanel) => {
+    console.log('updated');
+    const messageText = getStatsString(stats);
+    webViewPanel.webview.html = getWebviewTemplate(messageText);
+  };
 	
 	let disposable = vscode.commands.registerCommand('coderstat.helloWorld', () => StatusBarProvider(stats, context));
 	const quickPick = vscode.commands.registerCommand('coderstat.openPick', QuickPickProvider);
+
+  vscode.window.registerTreeDataProvider( 
+    'coderStats',
+    new NodeDependenciesProvider(
+      vscode.workspace.workspaceFolders 
+      ? vscode.workspace.workspaceFolders[0].uri.path
+      : ''
+    )
+  );
 
 	context.subscriptions.push(
     vscode.commands.registerCommand('coderstat.catStart', () => {

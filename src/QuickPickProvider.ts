@@ -15,7 +15,6 @@ const QuickPickProvider = () => {
   const pickView = vscode.window.createQuickPick();
   pickView.items = pickItems;
   pickView.onDidChangeSelection(selection => {
-    console.log(selection);
     if (selection[0].label === "webView") {
       vscode.commands.executeCommand('coderstat.showStatsWeb');
       pickView.hide();

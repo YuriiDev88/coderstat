@@ -46,7 +46,13 @@ function getWebviewContent(cat: keyof typeof cats) {
     <title>Cat Coding</title>
 </head>
 <body>
-    <img src="${cats[cat]}" width="300" />
+
+    <div class="test"></div>
+    <script>
+      const a = 10;
+      const divElement = document.querySelector('.test');
+      divElement.innerHTML = a
+    <script>
 </body>
 </html>`;
 }

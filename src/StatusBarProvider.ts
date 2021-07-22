@@ -8,7 +8,7 @@ let myStatusBarItem: vscode.StatusBarItem;
 const StatusBarProvider = (stats: ICoderStat, context: vscode.ExtensionContext) => {
 	
   vscode.workspace.onDidChangeTextDocument((event) => {
-    textCatcher(event, stats);	
+    textCatcher(event, stats);
   });
   vscode.window.showInformationMessage('Hello World from Velidoss !');
   
@@ -26,6 +26,11 @@ const StatusBarProvider = (stats: ICoderStat, context: vscode.ExtensionContext) 
       {}
     );
     panel.webview.html = getWebviewTemplate(messageText);
+
+    vscode.workspace.onDidChangeTextDocument((event) => {
+      const messageText = getWebViewString(stats);
+      panel.webview.html = getWebviewTemplate(messageText);
+    });
   });
 
   myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
