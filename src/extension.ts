@@ -3,6 +3,7 @@ import StatusBarProvider from './StatusBarProvider';
 import QuickPickProvider from './QuickPickProvider';
 import {NodeDependenciesProvider} from './treeView/TreeDataProvider';
 import { getStatsString, getWebviewTemplate } from './utils';
+import { CoderStatsProvider } from './treeView/CoderStatsProvider';
 
 const cats = {
   'Coding Cat': 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
@@ -39,6 +40,10 @@ export function activate(context: vscode.ExtensionContext) {
       ? vscode.workspace.workspaceFolders[0].uri.path
       : ''
     )
+  );
+  vscode.window.registerTreeDataProvider(
+    'coderData',
+    new CoderStatsProvider(stats)
   );
 
 	context.subscriptions.push(

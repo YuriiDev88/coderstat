@@ -45,7 +45,12 @@
       "explorer": [{
         "id": "coderStats",
         "name": "coder Stats"
-      }]
+      },
+      {
+        "id": "coderData",
+        "name": "Actual coder Data"
+      }
+    ]
 		},
     "viewsContainers": {
       "activitybar": [
