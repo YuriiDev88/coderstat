@@ -1,13 +1,7 @@
 import * as vscode from 'vscode';
+import ICoderStat from './interfaces/ICoderStat';
 
-interface ITextCatcher {
-  typeCount: number;
-  deletionCount: number;
-  symbolsTyped: number;
-  symbolsDeleted: number;
-}
-
-const textCatcher = (event: vscode.TextDocumentChangeEvent, stats: ITextCatcher): ITextCatcher => {
+const textCatcher = (event: vscode.TextDocumentChangeEvent, stats: ICoderStat): ICoderStat => {
 
   const {rangeLength, text} = event.contentChanges[0];
 

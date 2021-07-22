@@ -1,5 +1,9 @@
 import * as vscode from 'vscode';
+import ICoderStat from './interfaces/ICoderStat';
 import textCatcher from './textCatcher';
+import { getStatsString, getWebViewString, getWebviewTemplate } from './utils';
+import StatusBarProvider from './StatusBarProvider';
+import QuickPickProvider from './QuickPickProvider';
 
 const cats = {
   'Coding Cat': 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
@@ -7,27 +11,11 @@ const cats = {
 };
 
 export function activate(context: vscode.ExtensionContext) {
-	let myStatusBarItem: vscode.StatusBarItem;
 	console.log('Congratulations, your extension "coderstat" is now active!');
-
-	interface ITextCatcher {
-		typeCount: number;
-		deletionCount: number;
-		symbolsTyped: number;
-		symbolsDeleted: number;
-	}
 
 	enum StatViews {
 		infoMessage = "INFO_MESSAGE"
 	}
-
-	const getStatsString = (stats: ITextCatcher): string => {
-		return Object.entries(stats).map(([statName, stat]) => `${statName}: ${stat}`).join('\n');
-	};
-
-	const getWebViewString = (stats: ITextCatcher): string  => {
-		return Object.entries(stats).map(([statName, stat]) => `<p>${statName}: ${stat}</p>`).join(' ');
-	};
 
 	const stats =  {
 			typeCount: 0,
@@ -36,65 +24,8 @@ export function activate(context: vscode.ExtensionContext) {
 			symbolsDeleted: 0,
 		};	
 	
-	let disposable = vscode.commands.registerCommand('coderstat.helloWorld', () => {
-	
-		vscode.workspace.onDidChangeTextDocument((event) => {
-			textCatcher(event, stats);	
-		});
-		vscode.window.showInformationMessage('Hello World from Velidoss !');
-		
-		const showStats = vscode.commands.registerCommand('coderstat.showStats', () => {
-			const messageText = getStatsString(stats);
-			vscode.window.showInformationMessage(messageText);
-		});
-
-		const showStatsWeb = vscode.commands.registerCommand('coderstat.showStatsWeb', () => {
-			const messageText = getWebViewString(stats);
-			const panel = vscode.window.createWebviewPanel(
-				'CoderStats', 
-				'Coder Stats',
-				vscode.ViewColumn.One,
-				{}
-			);
-			panel.webview.html = getWebviewTemplate(messageText);
-		});
-
-		myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-		myStatusBarItem.command = 'coderstat.openPick';
-		console.log(myStatusBarItem);
-		myStatusBarItem.text = 'coderStats';
-		myStatusBarItem.show();
-		context.subscriptions.push(showStats, showStatsWeb);
-	});
-
-	context.subscriptions.push(
-		vscode.commands.registerCommand('coderstat.openPick', () => {
-			const pickItems = [
-				{
-					label: "informationMessage",
-					detail: "show stats in the information message"
-				},
-				{
-					label: "webView",
-					detail: "show stats in new web view window"
-				}
-			];
-
-			const pickView = vscode.window.createQuickPick();
-			pickView.items = pickItems;
-			pickView.onDidChangeSelection(selection => {
-				console.log(selection);
-				if (selection[0].label === "webView") {
-					vscode.commands.executeCommand('coderstat.showStatsWeb');
-				}
-				if (selection[0].label === "informationMessage") {
-					vscode.commands.executeCommand('coderstat.showStats');
-				}
-			});
-			pickView.onDidHide(() => pickView.dispose());
-			pickView.show();
-	})
-);
+	let disposable = vscode.commands.registerCommand('coderstat.helloWorld', () => StatusBarProvider(stats, context));
+	const quickPick = vscode.commands.registerCommand('coderstat.openPick', QuickPickProvider);
 
 	context.subscriptions.push(
     vscode.commands.registerCommand('coderstat.catStart', () => {
@@ -129,20 +60,6 @@ export function activate(context: vscode.ExtensionContext) {
     })
   );
 
-	function getWebviewTemplate(content: string) {
-		return `<!DOCTYPE html>
-	<html lang="en">
-	<head>
-			<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>Cat Coding</title>
-	</head>
-	<body>
-			${content}
-	</body>
-	</html>`;
-	}
-
 	function getWebviewContent(cat: keyof typeof cats) {
 		return `<!DOCTYPE html>
 	<html lang="en">
@@ -157,7 +74,7 @@ export function activate(context: vscode.ExtensionContext) {
 	</html>`;
 	}
 
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(disposable, quickPick);
 }
 
 export function deactivate() {
