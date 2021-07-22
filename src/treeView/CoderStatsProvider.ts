@@ -3,7 +3,15 @@ import * as path from 'path';
 import ICoderStat from '../interfaces/ICoderStat';
 
 export class CoderStatsProvider implements vscode.TreeDataProvider<Dependency> {
+
+  private _onDidChangeTreeData: vscode.EventEmitter<Dependency | undefined | void> = new vscode.EventEmitter<Dependency | undefined | void>();
+  readonly onDidChangeTreeData: vscode.Event<Dependency | undefined | void> = this._onDidChangeTreeData.event;
+
   constructor(private stats: ICoderStat){}
+
+	refresh(): void {
+		this._onDidChangeTreeData.fire();
+	}
 
   getTreeItem(element: Dependency): vscode.TreeItem {
     console.log(element);

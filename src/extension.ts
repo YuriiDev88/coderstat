@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
     webViewPanel.webview.html = getWebviewTemplate(messageText);
   };
 	
-	let disposable = vscode.commands.registerCommand('coderstat.helloWorld', () => StatusBarProvider(stats, context));
+	let disposable = vscode.commands.registerCommand('coderstat.helloWorld', () => StatusBarProvider(stats, context, refreshProvider));
 	const quickPick = vscode.commands.registerCommand('coderstat.openPick', QuickPickProvider);
 
   vscode.window.registerTreeDataProvider( 
@@ -41,10 +41,17 @@ export function activate(context: vscode.ExtensionContext) {
       : ''
     )
   );
+
+  const coderStatsProvider =  new CoderStatsProvider(stats);
+
   vscode.window.registerTreeDataProvider(
     'coderData',
-    new CoderStatsProvider(stats)
+    coderStatsProvider
   );
+
+  function refreshProvider (): void {coderStatsProvider.refresh()};
+
+  const filesRefresher = vscode.commands.registerCommand('coderstat.refreshStats',refreshProvider);
 
 	context.subscriptions.push(
     vscode.commands.registerCommand('coderstat.catStart', () => {
@@ -93,7 +100,7 @@ export function activate(context: vscode.ExtensionContext) {
 	</html>`;
 	}
 
-	context.subscriptions.push(disposable, quickPick);
+	context.subscriptions.push(disposable, quickPick, filesRefresher);
 }
 
 export function deactivate() {

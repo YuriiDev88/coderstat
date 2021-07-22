@@ -5,10 +5,11 @@ import { getStatsString, getWebViewString, getWebviewTemplate } from './utils';
 
 let myStatusBarItem: vscode.StatusBarItem;
 
-const StatusBarProvider = (stats: ICoderStat, context: vscode.ExtensionContext) => {
+const StatusBarProvider = (stats: ICoderStat, context: vscode.ExtensionContext, refreshProvider: () => void) => {
 	
   vscode.workspace.onDidChangeTextDocument((event) => {
     textCatcher(event, stats);
+    refreshProvider();
   });
   vscode.window.showInformationMessage('Hello World from Velidoss !');
   

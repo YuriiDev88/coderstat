@@ -24,20 +24,20 @@
 				"command": "coderstat.catStart",
 				"title": "catStart"
 			},
-      {
-        "command": "coderstat.copyStats",
-        "title": "Refresh",
-        "icon": {
-          "light": "resources/copy.svg",
-          "dark": "resources/copy.svg"
-        }
-      }
+			{
+				"command": "coderstat.refreshStats",
+				"title": "Refresh",
+				"icon": {
+					"light": "media/copy.svg",
+					"dark": "media/copy.svg"
+				}
+			}
 		],
     "menus": {
       "view/title": [
         {
-          "command": "coderstat.copyStats",
-          "when": "view == coderStats"
+          "command": "coderstat.refreshStats",
+          "when": "view == coderstat"
         }
       ]
     },
