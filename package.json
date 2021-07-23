@@ -4,7 +4,6 @@
 	"description": "Application, which gathers your conding data!",
   "publisher": "BynnySlayer",
 	"version": "0.0.2",
-  "icon": "src/media/coderStatLogo.jpeg",
 	"engines": {
 		"vscode": "^1.58.0"
 	},
@@ -25,8 +24,8 @@
 				"command": "coderstat.refreshStats",
 				"title": "Refresh",
 				"icon": {
-					"light": "media/copy.svg",
-					"dark": "media/copy.svg"
+					"light": "src/media/copy.svg",
+					"dark": "src/media/copy.svg"
 				}
 			}
 		],

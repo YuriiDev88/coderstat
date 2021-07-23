@@ -2,11 +2,12 @@ import * as vscode from 'vscode';
 import StatusBarProvider from './StatusBarProvider';
 import QuickPickProvider from './QuickPickProvider';
 import { CoderStatsProvider } from './treeView/CoderStatsProvider';
+import ICoderStat from './interfaces/ICoderStat';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "coderstat" is now active!');
 
-	const stats =  {
+	const stats: ICoderStat =  {
     typeCount: 0,
     deletionCount: 0,
     symbolsTyped: 0,
