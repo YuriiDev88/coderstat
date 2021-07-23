@@ -2,7 +2,7 @@
 
 ## To start work with extension
 
-After extension installation open Show all commands - `Ctrl+Shift+P` and type `Coderstat: Start App`
+After extension installation open Show all commands - `Ctrl+Shift+P` and type `CoderStat: Start App`
 
 `CoderStats` menu will appear in left status bar, and stats will be placed in explorer.
 
