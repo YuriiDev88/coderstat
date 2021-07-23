@@ -3,7 +3,7 @@
   "displayName": "",
   "description": "Application, which gathers your conding data!",
   "publisher": "BynnySlayer",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "icon": "media/logo.jpeg",
   "galleryBanner": {
     "color": "#1E1E1E",
@@ -28,6 +28,10 @@
       {
         "command": "coderstat.startApp",
         "title": "CoderStat: Start App"
+      },     
+      {
+        "command": "coderstat.resetStats",
+        "title": "CoderStat: Reset Stats"
       }
     ],
     "views": {

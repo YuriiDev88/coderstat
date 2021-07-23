@@ -14,7 +14,8 @@ export function activate(context: vscode.ExtensionContext) {
     symbolsDeleted: 0,
   };
 
-  let disposable = vscode.commands.registerCommand('coderstat.startApp', () => StatusBarProvider(stats, context, refreshProvider));
+  const disposable = vscode.commands.registerCommand('coderstat.startApp',
+   () => StatusBarProvider(stats, context, refreshProvider, resetCoderStatsCallBack));
   const quickPick = vscode.commands.registerCommand('coderstat.openPick', QuickPickProvider);
 
   const coderStatsProvider =  new CoderStatsProvider(stats);
@@ -25,6 +26,14 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   function refreshProvider (): void {coderStatsProvider.refresh()};
+
+  function resetCoderStatsCallBack (): void {
+    stats.typeCount = 0;
+    stats.deletionCount = 0;
+    stats.symbolsTyped = 0;
+    stats.symbolsDeleted = 0;
+    refreshProvider();
+  }
 
   const filesRefresher = vscode.commands.registerCommand('coderstat.refreshStats',refreshProvider);
 

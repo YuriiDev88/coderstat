@@ -8,6 +8,8 @@ After extension installation open Show all commands - `Ctrl+Shift+P` and type `C
 
 Click on `CoderStats` in status bar to see a context message to pick up information message or webview to show stats.
 
+Use command `CoderStat: Reset Stats` to reset statistics.
+
 ## Features
 
 1. Data storage of coder actions - deletion, and typing symbols;

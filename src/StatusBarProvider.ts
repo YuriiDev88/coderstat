@@ -4,8 +4,14 @@ import textCatcher from './textCatcher';
 import { getStatsString, getWebViewString, getWebviewTemplate } from './utils';
 
 let myStatusBarItem: vscode.StatusBarItem;
+let WebViewPanel: vscode.WebviewPanel;
 
-const StatusBarProvider = (stats: ICoderStat, context: vscode.ExtensionContext, refreshProvider: () => void) => {
+const StatusBarProvider = (
+    stats: ICoderStat, 
+    context: vscode.ExtensionContext, 
+    refreshProvider: () => void,
+    resetCoderStatsCallBack: () => void,
+  ) => {
 
   vscode.workspace.onDidChangeTextDocument((event) => {
     textCatcher(event, stats);
@@ -18,19 +24,27 @@ const StatusBarProvider = (stats: ICoderStat, context: vscode.ExtensionContext, 
     vscode.window.showInformationMessage(messageText);
   });
 
+  const resetCoderStats = vscode.commands.registerCommand('coderstat.resetStats', () => {
+    resetCoderStatsCallBack();
+    if (WebViewPanel) {
+      const messageText = getWebViewString(stats);
+      WebViewPanel.webview.html = getWebviewTemplate(messageText);
+    }
+  })
+
   const showStatsWeb = vscode.commands.registerCommand('coderstat.showStatsWeb', () => {
     const messageText = getWebViewString(stats);
-    const panel = vscode.window.createWebviewPanel(
+    WebViewPanel= vscode.window.createWebviewPanel(
       'CoderStats', 
       'Coder Stats',
       vscode.ViewColumn.One,
       {enableScripts: true}
     );
-    panel.webview.html = getWebviewTemplate(messageText);
+    WebViewPanel.webview.html = getWebviewTemplate(messageText);
 
     vscode.workspace.onDidChangeTextDocument((event) => {
       const messageText = getWebViewString(stats);
-      panel.webview.html = getWebviewTemplate(messageText);
+      WebViewPanel.webview.html = getWebviewTemplate(messageText);
     });
   });
 
@@ -38,7 +52,7 @@ const StatusBarProvider = (stats: ICoderStat, context: vscode.ExtensionContext, 
   myStatusBarItem.command = 'coderstat.openPick';
   myStatusBarItem.text = 'coderStats';
   myStatusBarItem.show();
-  context.subscriptions.push(showStats, showStatsWeb);
+  context.subscriptions.push(showStats, showStatsWeb, resetCoderStats);
 };
 
 export default StatusBarProvider;
