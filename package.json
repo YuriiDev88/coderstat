@@ -27,11 +27,11 @@
 		"commands": [
 			{
 				"command": "coderstat.startApp",
-				"title": "Start app"
+				"title": "Coderstat: Startapp"
 			},
 			{
 				"command": "coderstat.refreshStats",
-				"title": "Refresh",
+				"title": "Coderstat: Refresh",
 				"icon": {
 					"light": "media/copy.svg",
 					"dark": "media/copy.svg"
