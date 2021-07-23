@@ -10,19 +10,14 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:coderstat.helloWorld",
-				"onCommand:coderstat.catStart"
+        "onCommand:coderstat.startApp"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "coderstat.helloWorld",
-				"title": "Hello World"
-			},
-			{
-				"command": "coderstat.catStart",
-				"title": "catStart"
+				"command": "coderstat.startApp",
+				"title": "Start app"
 			},
 			{
 				"command": "coderstat.refreshStats",
@@ -42,26 +37,13 @@
       ]
     },
 		"views": {
-      "explorer": [{
-        "id": "coderStats",
-        "name": "coder Stats"
-      },
+      "explorer": [
       {
         "id": "coderData",
         "name": "Actual coder Data"
       }
     ]
-		},
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "coderStatsContainer",
-          "title": "coder Stats coderStatsContainer",
-          "icon": "media/coderStatIcon.svg"
-        }
-      ]
-    }
-
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "yarn run package",

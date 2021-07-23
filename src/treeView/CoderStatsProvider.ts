@@ -35,7 +35,7 @@ class Dependency extends vscode.TreeItem {
     super(label);
   }
 
-  iconPath = {
+  iconPath =  {
     light: path.join(__filename, '..', '..', 'src', 'media', 'copy.svg'),
     dark: path.join(__filename, '..', '..', 'src', 'media', 'copy.svg')
   };
