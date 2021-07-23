@@ -2,6 +2,7 @@
   "name": "coderstat",
 	"displayName": "",
 	"description": "coder stats ",
+  "publisher": "BynnySlayer",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.58.0"
@@ -10,7 +11,7 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:coderstat.startApp"
+    "onCommand:coderstat.startApp"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
