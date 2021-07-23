@@ -11,7 +11,7 @@ const textCatcher = (event: vscode.TextDocumentChangeEvent, stats: ICoderStat): 
       typeCount: stats.typeCount += 1,
       symbolsTyped: stats.symbolsTyped += text.length,
     };
-  } 
+  }   
   else {
     stats = {
       ...stats,

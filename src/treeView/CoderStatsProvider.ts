@@ -9,9 +9,9 @@ export class CoderStatsProvider implements vscode.TreeDataProvider<Dependency> {
 
   constructor(private stats: ICoderStat){}
 
-	refresh(): void {
-		this._onDidChangeTreeData.fire();
-	}
+  refresh(): void {
+    this._onDidChangeTreeData.fire();
+  }
 
   getTreeItem(element: Dependency): vscode.TreeItem {
     console.log(element);
