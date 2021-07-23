@@ -3,7 +3,16 @@
 	"displayName": "",
 	"description": "Application, which gathers your conding data!",
   "publisher": "BynnySlayer",
-	"version": "0.0.2",
+	"version": "0.0.3",
+  "icon": "media/logo.jpeg",
+  "galleryBanner": {
+    "color": "#1E1E1E",
+    "theme": "light"
+  },
+  "repository": {
+    "type": "git",
+		"url": "https://github.com/YuriiDev88/coderstat"
+	},
 	"engines": {
 		"vscode": "^1.58.0"
 	},
@@ -24,8 +33,8 @@
 				"command": "coderstat.refreshStats",
 				"title": "Refresh",
 				"icon": {
-					"light": "src/media/copy.svg",
-					"dark": "src/media/copy.svg"
+					"light": "media/copy.svg",
+					"dark": "media/copy.svg"
 				}
 			}
 		],
