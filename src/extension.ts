@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
 			symbolsTyped: 0,
 			symbolsDeleted: 0,
 		};	
-
+    
   const updateWebView = (webViewPanel: vscode.WebviewPanel) => {
     console.log('updated');
     const messageText = getStatsString(stats);
