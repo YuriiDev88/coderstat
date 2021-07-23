@@ -28,24 +28,8 @@
       {
         "command": "coderstat.startApp",
         "title": "CoderStat: Start App"
-      },
-      {
-        "command": "coderstat.refreshStats",
-        "title": "CoderStat: Refresh",
-        "icon": {
-          "light": "media/copy.svg",
-          "dark": "media/copy.svg"
-        }
       }
     ],
-    "menus": {
-      "view/title": [
-        {
-          "command": "coderstat.refreshStats",
-          "when": "view == coderstat"
-        }
-      ]
-    },
     "views": {
       "explorer": [
       {
